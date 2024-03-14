@@ -10,7 +10,6 @@ import { ProductModalComponent } from '../components/product-modal/product-modal
   standalone: true,
   imports: [ProductComponent, CommonModule, ProductModalComponent],
   templateUrl: './home.component.html',
-  animations: ['@animation.start'],
 })
 export class HomeComponent {
   products: ProductWidthId[] = [];
