@@ -32,7 +32,7 @@ export class ProductModalComponent {
 
   specialCharacterValidator(): ValidatorFn {
     return (control) => {
-      const hasSpecialCharacter = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(
+      const hasSpecialCharacter = /[!@#$%^&*_+=\[\]{};':"\\|,.<>\/?]+/.test(
         control.value
       );
 
@@ -44,7 +44,7 @@ export class ProductModalComponent {
     name: ['', [Validators.required, this.specialCharacterValidator()]],
     imgUrl: [''],
     price: [0, [Validators.required]],
-    rating: [1],
+    rating: [1, [Validators.required]],
   });
 
   onConfirm() {

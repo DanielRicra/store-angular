@@ -84,7 +84,7 @@
                 class="px-3 py-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-purple-600"
                 formControlName="rating"
               >
-                <option value="1" selected>1 Star</option>
+                <option value="1" [defaultSelected]="1">1 Star</option>
                 <option value="2">2 Stars</option>
                 <option value="3">3 Stars</option>
                 <option value="4">4 Stars</option>
@@ -96,8 +96,9 @@
         <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
           <button
             type="button"
-            class="inline-flex w-full justify-center rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 sm:ml-3 sm:w-auto"
+            class="inline-flex w-full justify-center rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 sm:ml-3 sm:w-auto disabled:opacity-50 disabled:pointer-events-none"
             (click)="onConfirm()"
+            [disabled]="!productForm.valid"
           >
             Confirm
           </button>

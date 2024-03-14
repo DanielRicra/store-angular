@@ -1,0 +1,6 @@
+input.ng-invalid {
+  border: 2px solid rgb(223, 16, 16);
+  &:focus {
+    outline: none;
+  }
+}
