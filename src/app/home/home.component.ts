@@ -23,6 +23,8 @@ export class HomeComponent {
   };
   displayEditDialog = false;
   displayAddDialog = false;
+  perPage = 5;
+  currentPage = 1;
   constructor(private productService: ProductsService) {}
 
   openUpdateDialog(product: ProductWidthId) {
@@ -48,11 +50,11 @@ export class HomeComponent {
     this.displayAddDialog = false;
   }
 
-  fetchProducts(page: number, perPage: number) {
+  fetchProducts() {
     this.productService
       .getProducts({
-        page,
-        perPage,
+        page: this.currentPage,
+        perPage: this.perPage,
       })
       .subscribe({
         next: (products) => {
@@ -66,21 +68,23 @@ export class HomeComponent {
       });
   }
 
-  onPageChange(page: number, rows: number) {
-    this.fetchProducts(page, rows);
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.fetchProducts();
   }
 
   updateProduct(product: ProductWidthId) {
     this.productService.updateProduct(product).subscribe({
-      next: (data) => console.log(data),
+      next: () => this.fetchProducts(),
       error: (err) => console.log(err),
     });
   }
 
   deleteProduct(id: number) {
     this.productService.deleteProduct(id).subscribe({
-      next: (data) => {
-        console.log(data);
+      next: () => {
+        this.currentPage = 1;
+        this.fetchProducts();
       },
       error: (err) => console.log(err),
     });
@@ -88,14 +92,23 @@ export class HomeComponent {
 
   addProduct(product: Product) {
     this.productService.addProduct(product).subscribe({
-      next: (data) => {
-        console.log(data);
+      next: () => {
+        this.currentPage = 1;
+        this.fetchProducts();
       },
       error: (err) => console.log(err),
     });
   }
 
   ngOnInit() {
-    this.fetchProducts(0, 5);
+    this.fetchProducts();
+  }
+
+  onChangePerPage(target: EventTarget | null) {
+    if (!target) return;
+
+    this.perPage = Number((target as HTMLSelectElement).value);
+    this.currentPage = 1;
+    this.fetchProducts();
   }
 }
