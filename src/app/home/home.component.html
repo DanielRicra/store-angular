@@ -1,0 +1,46 @@
+<div class="flex flex-col gap-1">
+  <!-- Add Product Button -->
+  <button
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl self-end my-4"
+    (click)="openAddDialog()"
+  >
+    Add New Product
+  </button>
+
+  <!-- Products section -->
+  <div class="flex flex-row flex-wrap gap-1 justify-between">
+    <app-product
+      *ngFor="let product of products"
+      [product]="product"
+      (update)="openUpdateDialog($event)"
+      (delete)="openDeleteDialog($event)"
+    ></app-product>
+  </div>
+
+  <!-- Paginator -->
+  <div class="flex flex-row gap-1 mt-5 self-center">
+    <button
+      type="button"
+      *ngFor="let pageNum of pagesNumbers"
+      class="p-1 w-9 aspect-square rounded-lg bg-purple-300 border-none"
+      (click)="onPageChange(pageNum, 5)"
+    >
+      {{ pageNum }}
+    </button>
+  </div>
+
+  <!--Update Product-->
+  <app-product-modal
+    [selectedProduct]="selectedProduct"
+    title="Edit Product"
+    [(display)]="displayEditDialog"
+    (confirm)="onConfirmUpdate($event)"
+  ></app-product-modal>
+
+  <!--Add Product-->
+  <app-product-modal
+    title="Add new Product"
+    [(display)]="displayAddDialog"
+    (confirm)="onConfirmAdd($event)"
+  ></app-product-modal>
+</div>
